@@ -1,0 +1,172 @@
+openapi: 3.0.1
+info:
+  title: career-copilot-backend
+  description: My cool app
+  version: 1.0.0
+servers:
+  - url: /api/v1
+tags:
+  - name: User Service
+    description: User Service endpoints
+  - name: Specification
+    description: The swagger API specification
+paths:
+  /auth/join-waitlist:
+    post:
+      tags:
+        - User Service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JoinWaitlistBody"
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JoinWaitlistResponse"
+  /auth/signup:
+    post:
+      tags:
+        - User Service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpBody"
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JoinWaitlistResponse"
+  /auth/login:
+    post:
+      tags:
+        - User Service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpBody"
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignUpResponse"
+  /user/getuser:
+    get:
+      tags:
+        - User Service
+      security:
+        - JWT: []
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetUserResponse"
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
+          content: {}
+
+components:
+  schemas:
+    JoinWaitlistBody:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "johndoe@test.com"
+
+    JoinWaitlistResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Thank you for joining the waitlist!"
+
+    SignUpBody:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "johndoe@test.com"
+
+    SignUpResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "5e1f5c9c-7b1a-4c1c-8c9d-3d2a1d2e3f4g"
+        email:
+          type: string
+          format: email
+          example: "johndoe@test.com"
+        credits:
+          type: integer
+          example: 0
+        tags:
+          type: array
+          items:
+            type: string
+            example: "javascript"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2020-01-01T00:00:00.000Z"
+
+    GetUserRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: "johndoe@test.com"
+
+    GetUserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "5e1f5c9c-7b1a-4c1c-8c9d-3d2a1d2e3f4g"
+        email:
+          type: string
+          format: email
+          example: "johndoe@test.com"
+        credits:
+          type: integer
+          example: 0
+        tags:
+          type: array
+          items:
+            type: string
+            example: "javascript"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2020-01-01T00:00:00.000Z"
+  securitySchemes:
+    JWT:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: >-
+        Enter the token with the `Bearer: ` prefix, e.g. "Bearer jwt token".
