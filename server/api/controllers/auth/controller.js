@@ -24,7 +24,7 @@ export class Controller {
         res.status(400).send("Email missing!");
       }
 
-      if (await userService.getUser({ email: req.body.email })) {
+      if (await userService.isUserexist({ email: req.body.email })) {
         res.status(400).send("Email already exists!");
       } else {
         const user_id = await userService.signup(req.body.email);
@@ -41,11 +41,11 @@ export class Controller {
         res.status(400).send("Email missing!");
       }
 
-      const user = await userService.getUser({ email: req.body.email });
-      if (!user) {
+      const user_id = await userService.isUserexist({ email: req.body.email });
+      if (!user_id) {
         res.status(400).send("Email does not exist!");
       } else {
-        const token = authenticationService.generateToken(user._id);
+        const token = authenticationService.generateToken(user_id);
         res.status(200).send(token);
       }
     } catch (err) {

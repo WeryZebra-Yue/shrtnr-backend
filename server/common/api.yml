@@ -6,6 +6,8 @@ info:
 servers:
   - url: /api/v1
 tags:
+  - name: Auth Service
+    description: Auth Service endpoints
   - name: User Service
     description: User Service endpoints
   - name: Specification
@@ -14,7 +16,7 @@ paths:
   /auth/join-waitlist:
     post:
       tags:
-        - User Service
+        - Auth Service
       requestBody:
         content:
           application/json:
@@ -31,7 +33,7 @@ paths:
   /auth/signup:
     post:
       tags:
-        - User Service
+        - Auth Service
       requestBody:
         content:
           application/json:
@@ -48,7 +50,7 @@ paths:
   /auth/login:
     post:
       tags:
-        - User Service
+        - Auth Service
       requestBody:
         content:
           application/json:
