@@ -28,12 +28,21 @@ class UserService {
       l.error(err, "SIGNUP ERROR");
     }
   }
-  async getUser(filter) {
+  async isUserexist(filter) {
     try {
       const user = await UserModel.findOne(filter);
       if (!user) {
         return null;
       }
+      return user._id;
+    } catch (err) {
+      l.error(err, "GET USER ERROR");
+      throw err;
+    }
+  }
+  async getuser(user_id) {
+    try {
+      const user = await UserModel.findById(user_id);
       return user;
     } catch (err) {
       l.error(err, "GET USER ERROR");
