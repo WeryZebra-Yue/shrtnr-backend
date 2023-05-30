@@ -12,6 +12,7 @@ tags:
     description: User Service endpoints
   - name: Specification
     description: The swagger API specification
+
 paths:
   /auth/join-waitlist:
     post:
@@ -30,6 +31,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/JoinWaitlistResponse"
+
   /auth/signup:
     post:
       tags:
@@ -47,6 +49,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/JoinWaitlistResponse"
+
   /auth/login:
     post:
       tags:
@@ -64,6 +67,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SignUpResponse"
+
+  /auth/google-signup:
+    post:
+      tags:
+        - Auth Service
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GoogleSignUpBody"
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignUpResponse"
+
   /user/getuser:
     get:
       tags:
@@ -134,6 +156,15 @@ components:
           type: string
           format: date-time
           example: "2020-01-01T00:00:00.000Z"
+
+    GoogleSignUpBody:
+      type: object
+      required:
+        - code
+      properties:
+        code:
+          type: string
+          example: "4/0AY0e-g5Uq7q3"
 
     GetUserRequest:
       type: object

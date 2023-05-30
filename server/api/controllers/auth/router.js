@@ -5,4 +5,5 @@ export default express
   .Router()
   .post("/join-waitlist", controller.joinWaitlist)
   .post("/signup", controller.signup)
-  .post("/login", controller.login);
+  .post("/login", controller.login)
+  .post("/google-signup", controller.googleSignup);

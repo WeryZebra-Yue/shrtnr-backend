@@ -24,11 +24,11 @@ export class Controller {
         res.status(400).send("Email missing!");
       }
 
-      if (await userService.isUserexist({ email: req.body.email })) {
+      if (await userService.userExist({ email: req.body.email })) {
         res.status(400).send("Email already exists!");
       } else {
-        const user_id = await userService.signup(req.body.email);
-        const token = authenticationService.generateToken(user_id);
+        const userId = await userService.signup(req.body.email);
+        const token = authenticationService.generateToken(userId);
         res.status(200).send(token);
       }
     } catch (err) {
@@ -41,15 +41,42 @@ export class Controller {
         res.status(400).send("Email missing!");
       }
 
-      const user_id = await userService.isUserexist({ email: req.body.email });
-      if (!user_id) {
+      const userId = await userService.userExist({ email: req.body.email });
+      if (!userId) {
         res.status(400).send("Email does not exist!");
       } else {
-        const token = authenticationService.generateToken(user_id);
+        const token = authenticationService.generateToken(userId);
         res.status(200).send(token);
       }
     } catch (err) {
       l.error(err, "LOGIN CONTROLLER ERROR");
+    }
+  }
+
+  async googleSignup(req, res, next) {
+    try {
+      const code = req.body.code;
+      const userData = await userService.fetchGoogleData(code);
+
+      const existingUser = await userService.userExist({
+        email: userData.email,
+      });
+      if (existingUser) {
+        const token = authenticationService.generateToken(existingUser._id);
+        return res.status(200).send(token);
+      }
+
+      const userId = await userService.signup(
+        userData.email,
+        userData.firstName,
+        userData.lastName,
+        userData.avatar
+      );
+      const token = authenticationService.generateToken(userId);
+      return res.status(200).send(token);
+    } catch (err) {
+      l.error(err, "GOOGLE SIGNUP CONTROLLER ERROR");
+      next(err);
     }
   }
 }
