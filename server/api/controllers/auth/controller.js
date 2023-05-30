@@ -53,7 +53,7 @@ export class Controller {
     }
   }
 
-  async googleSignup(req, res, next) {
+  async googleLogin(req, res, next) {
     try {
       const code = req.body.code;
       const userData = await userService.fetchGoogleData(code);
@@ -75,7 +75,7 @@ export class Controller {
       const token = authenticationService.generateToken(userId);
       return res.status(200).send(token);
     } catch (err) {
-      l.error(err, "GOOGLE SIGNUP CONTROLLER ERROR");
+      l.error(err, "GOOGLE LOGIN CONTROLLER ERROR");
       next(err);
     }
   }

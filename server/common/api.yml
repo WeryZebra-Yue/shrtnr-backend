@@ -68,7 +68,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/SignUpResponse"
 
-  /auth/google-signup:
+  /auth/google-login:
     post:
       tags:
         - Auth Service
@@ -76,7 +76,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/GoogleSignUpBody"
+              $ref: "#/components/schemas/GoogleLoginBody"
         required: true
       responses:
         200:
@@ -157,7 +157,7 @@ components:
           format: date-time
           example: "2020-01-01T00:00:00.000Z"
 
-    GoogleSignUpBody:
+    GoogleLoginBody:
       type: object
       required:
         - code

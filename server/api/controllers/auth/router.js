@@ -6,4 +6,4 @@ export default express
   .post("/join-waitlist", controller.joinWaitlist)
   .post("/signup", controller.signup)
   .post("/login", controller.login)
-  .post("/google-signup", controller.googleSignup);
+  .post("/google-login", controller.googleLogin);
