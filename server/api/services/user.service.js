@@ -1,10 +1,11 @@
 import axios from "axios";
+import url from "url";
+import { OAuth2Client } from "google-auth-library";
+import bcrypt from "bcrypt";
 import { ENVIROMENT_CONSTANTS } from "../../common/config";
 import l from "../../common/logger";
 import UserModel from "../../models/UserModel";
-import authenticationService from "./authentication.service";
 import validationService from "./validation.service";
-import url from "url";
 import { OAuth2Client } from "google-auth-library";
 import urlService from "./url.service";
 
@@ -28,31 +29,68 @@ class UserService {
     }
   }
 
-  async signup({ email, firstName, lastName, password }) {
-    email = validationService.normalizeEmail(email);
+  async signup(email, firstName, lastName, avatar, password) {
+    let userDoc = await UserModel.findOne({ email });
+
+    if (userDoc) {
+      const samePassword = await bcrypt.compare(password, userDoc.password);
+      if (samePassword) {
+        return userDoc;
+      }
+      throw new Error("User already exist with this email");
+    }
+
+    password = await bcrypt.hash(password, 10);
     try {
       const user = await UserModel.create({
         email,
         firstName,
         lastName,
+        avatar,
         password,
+        signedUpWith: "email",
       });
-      return user._id;
+      return user;
     } catch (err) {
-      l.error(err, "SIGNUP ERROR");
+      l.error(err, "SIGNUP SERVICE ERROR");
     }
   }
 
-  async userExist(filter) {
-    validationService.normalizeEmail(filter.email);
+  async login(email, password) {
     try {
-      const user = await UserModel.findOne(filter);
+      const user = await UserModel.findOne({ email });
+
       if (!user) {
-        return false;
+        throw new Error("User not found");
+      }
+
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        throw new Error("Invalid Username or Password");
+      }
+
+      return user;
+    } catch (err) {
+      l.error(err, "LOGIN SERVICE ERROR");
+      throw err;
+    }
+  }
+
+  async googleLogin(email, firstName, lastName, avatar) {
+    try {
+      let user = await UserModel.findOne({ email });
+      if (!user) {
+        user = await UserModel.create({
+          email,
+          firstName,
+          lastName,
+          avatar,
+          signedUpWith: "google",
+        });
       }
       return user;
     } catch (err) {
-      l.error(err, "GET USER ERROR");
+      l.error(err, "GOOGLE LOGIN SERVICE ERROR");
       throw err;
     }
   }

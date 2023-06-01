@@ -60,7 +60,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SignUpBody"
+              $ref: "#/components/schemas/LoginBody"
         required: true
       responses:
         200:
@@ -242,26 +242,46 @@ components:
 
     SignUpBody:
       type: object
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
       properties:
         email:
           type: string
           format: email
           example: "johndoe@test.com"
+        password:
+          type: string
+          example: "password"
+        firstName:
+          type: string
+          example: "John"
+        lastName:
+          type: string
+          example: "Doe"
 
     SignUpResponse:
       type: object
       properties:
-        id:
+        accessToken:
           type: string
-          example: "5e1f5c9c-7b1a-4c1c-8c9d-3d2a1d2e3f4g"
+          example: "jwt token"
+
+    LoginBody:
+      type: object
+      required:
+        - email
+        - password
+      properties:
         email:
           type: string
           format: email
           example: "johndoe@test.com"
-        createdAt:
+        password:
           type: string
-          format: date-time
-          example: "2020-01-01T00:00:00.000Z"
+          example: "password"
 
     GoogleLoginBody:
       type: object

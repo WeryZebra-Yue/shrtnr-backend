@@ -7,6 +7,9 @@ const User = new mongoose.Schema(
       required: [true, "Email missing!"],
       unique: true,
     },
+    password: {
+      type: String,
+    },
     firstName: {
       type: String,
     },
@@ -20,6 +23,19 @@ const User = new mongoose.Schema(
     urls: {
       type: Array,
       default: [],
+    },
+    signedUpWith: {
+      type: String,
+      enum: ["google", "email"],
+    },
+    tags: {
+      type: [
+        {
+          type: String,
+          enum: ["waitlist_user", "admin", "user"],
+        },
+      ],
+      default: ["user"],
     },
   },
   {
