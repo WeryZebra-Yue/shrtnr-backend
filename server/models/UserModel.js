@@ -9,11 +9,9 @@ const User = new mongoose.Schema(
     },
     firstName: {
       type: String,
-      required: [true, "First name missing!"],
     },
     lastName: {
       type: String,
-      required: [true, "Last name missing!"],
     },
     password: {
       type: String,

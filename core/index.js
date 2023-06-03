@@ -1,2 +1,8 @@
+require("dotenv").config();
 const getInsight = require("./insight.js");
-exports.getInsight = getInsight;
+// exports.getInsight = getInsight;
+// console.log(process.env.OPENAI_KEY);
+getInsight(
+  ["professor", "volunteer", "python"],
+  "headline:Android Engineer at Titan || Google Certified Associate Android Developer|| Ex - Accenture || Ex - Trestle Labs || Ex - Infoscion experince:android engineer,titan company limited full-time,hyderabad telangana india, helped me get this job,linkedin helped me get this job&software engineering analyst,accenture full-time,hyderabad telangana india&trestle labs,bengaluru karnataka india,android development lead,mobile application developer&infosys,senior operations executive,hyderabad area india,operations exective,operation executive trainee,mysuru karnataka india&android app developer,digital impact square a tcs foundation initiative internship,nasik area india,tool android studio,responsibilities,- developing app features as per the requirements for kibo xs graphite prototype compatible mobile application,- part of ‘trestle labs’ core team in developing the iconic device kibo xsgraphite ,- worked on camera api talkback and other advance features ,- worked on google vision api ,- attending daily status meetings and brainstorming session about the new features,, ,tool android studio responsibilities - developing app features as per the requirements for kibo xs graphite prototype compatible mobile application - part of ‘trestle labs’ core team in developing the iconic device kibo xsgraphite - worked on camera api talkback and other advance features - worked on google vision api - attending daily status meetings and brainstorming session about the new features skills:android development&java&oats "
+);

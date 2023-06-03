@@ -112,6 +112,43 @@ class UserService {
       throw error;
     }
   }
+
+  async addopening(userId, opening) {
+    try {
+      opening.userId = userId;
+      const response = await OpeningModel.create(opening);
+      return response._id;
+    } catch (err) {
+      l.error(err, "ADD OPENING ERROR");
+    }
+  }
+  async getopenings(userId) {
+    try {
+      const openings = await OpeningModel.find({ userId: userId });
+      return openings;
+    } catch (err) {
+      l.error(err, "GET OPENINGS ERROR");
+    }
+  }
+  async getopening(userId, openingId) {
+    try {
+      const opening = await OpeningModel.findOne({
+        _id: openingId,
+        userId: userId,
+      });
+      return opening;
+    } catch (err) {
+      l.error(err, "GET OPENING ERROR");
+    }
+  }
+
+  async deleteopening(userId, openingId) {
+    try {
+      await OpeningModel.deleteOne({ _id: openingId, userId: userId });
+    } catch (err) {
+      l.error(err, "DELETE OPENING ERROR");
+    }
+  }
 }
 
 export default new UserService();

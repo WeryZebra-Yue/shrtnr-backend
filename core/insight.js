@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_KEY,
@@ -13,7 +12,7 @@ const getInsight = async (skills, context) => {
     const response = await openai.createChatCompletion({
       top_p: 0,
       model: process.env.OPENAI_MODEL,
-      temperature: process.env.OPENAI_TEMPERATURE,
+      temperature: 0,
       messages: [
         {
           role: "user",
@@ -57,7 +56,8 @@ const getInsight = async (skills, context) => {
       return skills_insight;
     }
   } catch (err) {
-    console.log(err);
+    console.log("error in getInsight");
+    console.log(err, err.response.data);
     return err;
   }
 };

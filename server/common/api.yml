@@ -12,7 +12,9 @@ tags:
     description: User Service endpoints
   - name: Specification
     description: The swagger API specification
-
+  - name: Skill
+    description: Skill endpoints
+    
 paths:
   /auth/join-waitlist:
     post:
@@ -92,7 +94,6 @@ paths:
         - User Service
       security:
         - JWT: []
-
       responses:
         200:
           description: Success
@@ -220,6 +221,7 @@ paths:
         200:
           description: Return the API specification
           content: {}
+          
 
 components:
   schemas:
