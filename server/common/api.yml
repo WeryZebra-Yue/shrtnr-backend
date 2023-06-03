@@ -1,6 +1,6 @@
 openapi: 3.0.1
 info:
-  title: career-copilot-backend
+  title: copilot-backend
   description: My cool app
   version: 1.0.0
 servers:
@@ -100,6 +100,118 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetUserResponse"
+  
+  /url/add-url:
+    post:
+      tags:
+        - Url Service
+      security:
+        - JWT: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddUrlBody"
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddUrlResponse"
+ 
+  # /url/get-all-url:
+  #   get:
+  #     tags:
+  #       - Url Service
+  #     security:
+  #       - JWT: []
+  #     responses:
+  #       200:
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/GetAllUrlResponse"
+
+  /url/get-url:
+    get:
+      tags:
+        - Url Service
+      security:
+        - JWT: []
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddUrlResponse"
+  
+  /url/delete-url:
+    post:
+      tags:
+        - Url Service
+      security:
+        - JWT: []
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddUrlResponse"
+  
+  /url/update-url:
+    post:
+      tags:
+        - Url Service
+      security:
+        - JWT: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddUrlBody"
+        required: true
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddUrlResponse"
+  
+  /url/redirect-url:
+    get:
+      tags:
+        - Url Service
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AddUrlResponse"
   /spec:
     get:
       tags:
@@ -144,14 +256,6 @@ components:
           type: string
           format: email
           example: "johndoe@test.com"
-        credits:
-          type: integer
-          example: 0
-        tags:
-          type: array
-          items:
-            type: string
-            example: "javascript"
         createdAt:
           type: string
           format: date-time
@@ -184,18 +288,57 @@ components:
           type: string
           format: email
           example: "johndoe@test.com"
-        credits:
-          type: integer
-          example: 0
-        tags:
-          type: array
-          items:
-            type: string
-            example: "javascript"
         createdAt:
           type: string
           format: date-time
           example: "2020-01-01T00:00:00.000Z"
+  
+    AddUrlBody:
+      type: object
+      required:
+        - url
+      properties:
+        name:
+          type: string
+          example: "Google"
+        description:
+          type: string
+          example: "Search Engine"
+        url:
+          type: string
+          example: "https://www.google.com"
+        shorturl:
+          type: string
+          example: "https://copilot.com/abc123"
+        
+    AddUrlResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "5e1f5c9c-7b1a-4c1c-8c9d-3d2a1d2e3f4g"
+        name:
+          type: string
+          example: "Google"
+        description:
+          type: string
+          example: "Search Engine"
+        url:
+          type: string
+          example: "https://www.google.com"
+        shorturl:
+          type: string
+          example: "https://copilot.com/abc123"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2020-01-01T00:00:00.000Z"
+
+    GetAllUrlResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/AddUrlResponse"
+
   securitySchemes:
     JWT:
       type: apiKey

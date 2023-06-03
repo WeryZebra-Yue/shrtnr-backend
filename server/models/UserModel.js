@@ -15,27 +15,13 @@ const User = new mongoose.Schema(
       type: String,
       required: [true, "Last name missing!"],
     },
-    avatar: {
+    password: {
       type: String,
-      default: "",
+      required: [true, "Password missing!"],
     },
-    credits: {
-      type: Number,
-      default: 100,
-    },
-    openings: {
+    urls: {
       type: Array,
       default: [],
-    },
-
-    tags: {
-      type: [
-        {
-          type: String,
-          enum: ["waitlist_user", "admin", "user"],
-        },
-      ],
-      default: ["user"],
     },
   },
   {

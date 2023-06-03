@@ -27,7 +27,7 @@ export class Controller {
       if (await userService.userExist({ email: req.body.email })) {
         res.status(400).send("Email already exists!");
       } else {
-        const userId = await userService.signup(req.body.email);
+        const userId = await userService.signup(req.body);
         const token = authenticationService.generateToken(userId);
         res.status(200).send(token);
       }

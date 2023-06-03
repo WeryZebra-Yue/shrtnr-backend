@@ -27,14 +27,14 @@ class UserService {
     }
   }
 
-  async signup(email, firstName, lastName, avatar) {
+  async signup({ email, firstName, lastName, password }) {
     email = validationService.normalizeEmail(email);
     try {
       const user = await UserModel.create({
         email,
         firstName,
         lastName,
-        avatar,
+        password,
       });
       return user._id;
     } catch (err) {
