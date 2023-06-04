@@ -1,14 +1,12 @@
+import l from "../../common/logger";
 import axios from "axios";
 import url from "url";
-import { OAuth2Client } from "google-auth-library";
 import bcrypt from "bcrypt";
-import { ENVIROMENT_CONSTANTS } from "../../common/config";
-import l from "../../common/logger";
 import UserModel from "../../models/UserModel";
-import validationService from "./validation.service";
-import { OAuth2Client } from "google-auth-library";
 import urlService from "./url.service";
 
+import { OAuth2Client } from "google-auth-library";
+import { ENVIROMENT_CONSTANTS } from "../../common/config";
 class UserService {
   constructor() {
     this.client = new OAuth2Client(ENVIROMENT_CONSTANTS.GOOGLE_CLIENT_ID);
