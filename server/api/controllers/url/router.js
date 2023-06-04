@@ -8,5 +8,5 @@ export default express
   .get("/get-url", isAuthenticated, controller.getUrl)
   .post("/delete-url", isAuthenticated, controller.deleteUrl)
   .post("/update-url", isAuthenticated, controller.updateUrl)
-  .get("/redirect-url", controller.redirectUrl);
+  .get("/redirect-url/:shorturl", controller.redirectUrl);
 // .get("/get-all-url", isAuthenticated, controller.getAllUrl);

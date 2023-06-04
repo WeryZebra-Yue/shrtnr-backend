@@ -6,7 +6,7 @@ export class Controller {
   async addUrl(req, res) {
     try {
       const body = req.body;
-      const user = req.user.id;
+      const user = req.user;
       const shortUrl = await urlService.addUrl(user, body);
       return res.status(200).json({ shortUrl });
     } catch (err) {
@@ -27,7 +27,7 @@ export class Controller {
   async getUrl(req, res) {
     try {
       const urlId = req.query.id;
-      const user = req.user.id;
+      const user = req.user;
       const url = await urlService.getUrl(user._id, urlId);
       return res.status(200).json({ url });
     } catch (err) {
@@ -39,7 +39,7 @@ export class Controller {
     try {
       const user = req.user;
       const url = req.query.id;
-      const deletedUrl = await urlService.deleteUrl(user.id, url);
+      const deletedUrl = await urlService.deleteUrl(user, url);
       return res.status(200).json({ deletedUrl });
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
@@ -48,7 +48,7 @@ export class Controller {
   }
   async updateUrl(req, res) {
     try {
-      const user = req.user.id;
+      const user = req.user;
       const url = req.body;
       const updatedUrl = await urlService.updateUrl(user, url);
       return res.status(200).json({ updatedUrl });
@@ -59,9 +59,9 @@ export class Controller {
   }
   async redirectUrl(req, res) {
     try {
-      const shortUrl = req.query.shorturl;
+      const shortUrl = req.params.shorturl;
       const url = await urlService.redirectUrl(shortUrl);
-      res.redriect(url);
+      res.redirect(url);
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
       return res.status(500).json({ message: "Internal server error" });

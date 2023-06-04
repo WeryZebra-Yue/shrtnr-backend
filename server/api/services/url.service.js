@@ -11,9 +11,10 @@ class UrlService {
     const shorturl = body.shorturl
       ? body.shorturl
       : await this.getShortUrl(body.url);
+
     console.log(user);
     const response = await UrlModel.create({
-      userId: user._id,
+      userId: user.id,
       name: body.name,
       description: body.description,
       url: body.url,
@@ -22,20 +23,20 @@ class UrlService {
     return response;
   }
   async getAllUrl(user) {
-    const urls = await UrlModel.find({ userId: user._id });
+    const urls = await UrlModel.find({ userId: user.id });
     return urls;
   }
   async deleteUrl(user, url) {
     console.log(user);
     const deletedUrl = await UrlModel.deleteOne({
-      userId: user._id,
+      userId: user.id,
       _id: url,
     });
     return deletedUrl;
   }
   async updateUrl(user, url) {
     const updatedUrl = await UrlModel.updateOne(
-      { userId: user._id, _id: url._id },
+      { userId: user.id, _id: url._id },
       url
     );
     return updatedUrl;
