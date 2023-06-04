@@ -6,7 +6,7 @@ export class Controller {
   async addUrl(req, res) {
     try {
       const body = req.body;
-      const user = req.user;
+      const user = req.user.id;
       const shortUrl = await urlService.addUrl(user, body);
       return res.status(200).json({ shortUrl });
     } catch (err) {
@@ -26,8 +26,9 @@ export class Controller {
   }
   async getUrl(req, res) {
     try {
-      const id = req.query.id;
-      const url = await urlService.getUrl(id);
+      const urlId = req.query.id;
+      const user = req.user.id;
+      const url = await urlService.getUrl(user._id, urlId);
       return res.status(200).json({ url });
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
@@ -37,8 +38,8 @@ export class Controller {
   async deleteUrl(req, res) {
     try {
       const user = req.user;
-      const url = req.body;
-      const deletedUrl = await urlService.deleteUrl(user, url);
+      const url = req.query.id;
+      const deletedUrl = await urlService.deleteUrl(user.id, url);
       return res.status(200).json({ deletedUrl });
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
@@ -47,7 +48,7 @@ export class Controller {
   }
   async updateUrl(req, res) {
     try {
-      const user = req.user;
+      const user = req.user.id;
       const url = req.body;
       const updatedUrl = await urlService.updateUrl(user, url);
       return res.status(200).json({ updatedUrl });

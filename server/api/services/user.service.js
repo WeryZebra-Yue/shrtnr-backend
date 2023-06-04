@@ -6,6 +6,7 @@ import authenticationService from "./authentication.service";
 import validationService from "./validation.service";
 import url from "url";
 import { OAuth2Client } from "google-auth-library";
+import urlService from "./url.service";
 
 class UserService {
   constructor() {
@@ -59,6 +60,8 @@ class UserService {
   async getuser(userId) {
     try {
       const user = await UserModel.findById(userId);
+      const urls = await urlService.getAllUrl(user);
+      user.urls = urls;
       return user;
     } catch (err) {
       l.error(err, "GET USER ERROR");

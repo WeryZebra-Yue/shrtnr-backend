@@ -1,19 +1,9 @@
-import axios from "axios";
-import { ENVIROMENT_CONSTANTS } from "../../common/config";
-import l from "../../common/logger";
-import UserModel from "../../models/UserModel";
-import authenticationService from "./authentication.service";
-import validationService from "./validation.service";
-import url from "url";
-import { OAuth2Client } from "google-auth-library";
 import crypto from "crypto";
 import UrlModel from "../../models/UrlModel";
-import { Console } from "console";
 class UrlService {
   async addUrl(user, body) {
     if (body?.shorturl) {
       const shortUrl = await UrlModel.find({ shorturl: body.shorturl });
-      console.log(shortUrl);
       if (shortUrl && shortUrl.length > 0) {
         return { error: "Short URL already exists" };
       }
@@ -21,40 +11,40 @@ class UrlService {
     const shorturl = body.shorturl
       ? body.shorturl
       : await this.getShortUrl(body.url);
-
+    console.log(user);
     const response = await UrlModel.create({
+      userId: user._id,
       name: body.name,
       description: body.description,
       url: body.url,
       shorturl: shorturl,
     });
-
-    await UserModel.updateOne(
-      { email: user.email },
-      { $addToSet: { urls: response._id } },
-      { upsert: true }
-    );
     return response;
   }
   async getAllUrl(user) {
-    const urls = await UserModel.findOne({ user: user._id }).populate("urls");
+    const urls = await UrlModel.find({ userId: user._id });
     return urls;
   }
   async deleteUrl(user, url) {
-    const deletedUrl = await UrlModel.deleteOne({ _id: url._id });
-    await UserModel.updateOne(
-      { email: user.email },
-      { $pull: { urls: url._id } },
-      { upsert: true }
-    );
+    console.log(user);
+    const deletedUrl = await UrlModel.deleteOne({
+      userId: user._id,
+      _id: url,
+    });
     return deletedUrl;
   }
   async updateUrl(user, url) {
-    await this.deleteUrl(user, url);
-    await this.addUrl(user, url);
+    const updatedUrl = await UrlModel.updateOne(
+      { userId: user._id, _id: url._id },
+      url
+    );
+    return updatedUrl;
   }
-  async getUrl(id) {
-    const url = await UrlModel.findOne({ _id: id });
+  async getUrl(userId, urlId) {
+    const url = await UrlModel.findOne({
+      userId: userId,
+      _id: urlId,
+    });
     return url;
   }
   async redirectUrl(shortUrl) {

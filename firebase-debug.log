@@ -1,0 +1,9 @@
+[debug] [2023-05-31T05:53:47.848Z] ----------------------------------------------------------------------
+[debug] [2023-05-31T05:53:47.849Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting:kibo_prouction_target
+[debug] [2023-05-31T05:53:47.849Z] CLI Version:   12.1.0
+[debug] [2023-05-31T05:53:47.849Z] Platform:      darwin
+[debug] [2023-05-31T05:53:47.849Z] Node Version:  v18.16.0
+[debug] [2023-05-31T05:53:47.851Z] Time:          Wed May 31 2023 11:23:47 GMT+0530 (India Standard Time)
+[debug] [2023-05-31T05:53:47.851Z] ----------------------------------------------------------------------
+[debug]
+[debug] [2023-05-31T05:53:47.852Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
