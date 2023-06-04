@@ -62,7 +62,7 @@ export class Controller {
       const shortUrl = req.params.shorturl;
       const ip = req?.socket.remoteAddress || req?.connection.remoteAddres;
       const url = await urlService.redirectUrl(shortUrl);
-      res.json(url);
+      res.redirect(url);
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
       return res.status(500).json({ message: "Internal server error" });
