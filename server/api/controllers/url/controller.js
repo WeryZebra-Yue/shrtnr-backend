@@ -8,7 +8,7 @@ export class Controller {
       const body = req.body;
       const user = req.user;
       const shortUrl = await urlService.addUrl(user, body);
-      return res.status(200).json({ shortUrl });
+      return res.status(200).json(shortUrl);
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
       return res.status(500).json({ message: "Internal server error" });
@@ -27,9 +27,9 @@ export class Controller {
   async getUrl(req, res) {
     try {
       const urlId = req.query.id;
-      const user = req.user;
-      const url = await urlService.getUrl(user._id, urlId);
-      return res.status(200).json({ url });
+      const userId = req.user.id;
+      const url = await urlService.getUrl(userId, urlId);
+      return res.status(200).json(url);
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
       return res.status(500).json({ message: "Internal server error" });
@@ -51,7 +51,7 @@ export class Controller {
       const user = req.user;
       const url = req.body;
       const updatedUrl = await urlService.updateUrl(user, url);
-      return res.status(200).json({ updatedUrl });
+      return res.status(200).json(updatedUrl);
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
       return res.status(500).json({ message: "Internal server error" });
@@ -60,8 +60,25 @@ export class Controller {
   async redirectUrl(req, res) {
     try {
       const shortUrl = req.params.shorturl;
+      const ip = req?.socket.remoteAddress || req?.connection.remoteAddres;
       const url = await urlService.redirectUrl(shortUrl);
-      res.redirect(url);
+      res.json(url);
+    } catch (err) {
+      l.error(err, "SHORT URL ERROR");
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
+  async getAnalytics(req, res) {
+    try {
+      const urlId = req.query.id;
+      const start = req.query.start;
+      const end = req.query.end;
+      const user = req.user.id;
+      const analytics = await urlService.getAnalytics(urlId, user, {
+        start,
+        end,
+      });
+      return res.status(200).json(analytics);
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
       return res.status(500).json({ message: "Internal server error" });
