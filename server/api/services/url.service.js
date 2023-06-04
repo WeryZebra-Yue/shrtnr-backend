@@ -9,6 +9,15 @@ class UrlService {
         return { error: "Short URL already exists" };
       }
     }
+    const name = body.name
+      ? body.name
+      : "Untitled " +
+        ((await UrlModel.find({
+          userId: user.id,
+          name: { $regex: "Untitled" },
+        }).countDocuments()) +
+          1);
+
     const shorturl = body.shorturl
       ? body.shorturl
       : await this.getShortUrl(body.url);
@@ -16,7 +25,7 @@ class UrlService {
     console.log(user);
     const response = await UrlModel.create({
       userId: user.id,
-      name: body.name,
+      name: name,
       description: body.description,
       url: body.url,
       shorturl: shorturl,

@@ -113,7 +113,6 @@ class UserService {
         client_secret: ENVIROMENT_CONSTANTS.GOOGLE_CLIENT_SECRET,
         grant_type: "authorization_code",
       });
-
       const { data } = await axios.post(
         `https://www.googleapis.com/oauth2/v4/token`,
         urlEncodedBody,

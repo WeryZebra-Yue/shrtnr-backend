@@ -4,11 +4,11 @@ import isAuthenticated from "../../middlewares/isAuthenticated.jwt";
 
 export default express
   .Router()
-  .post("/add-url", isAuthenticated, controller.addUrl)
-  .post("/delete-url", isAuthenticated, controller.deleteUrl)
-  .post("/update-url", isAuthenticated, controller.updateUrl)
-  .get("/get-url", isAuthenticated, controller.getUrl)
+  .post("/add", isAuthenticated, controller.addUrl)
+  .post("/delete", isAuthenticated, controller.deleteUrl)
+  .post("/update", isAuthenticated, controller.updateUrl)
+  .get("/get", isAuthenticated, controller.getUrl)
   .get("/get-analytics", isAuthenticated, controller.getAnalytics)
-  .get("/redirect-url/:shorturl", controller.redirectUrl);
+  .get("/redirect/:shorturl", controller.redirectUrl);
 
 // .get("/get-all-url", isAuthenticated, controller.getAllUrl);
