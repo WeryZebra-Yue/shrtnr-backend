@@ -159,12 +159,14 @@ paths:
         - Url Service
       security:
         - JWT: []
-      parameters:
-        - name: id
-          in: query
-          required: true
-          schema:
-            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+        required: true
       responses:
         200:
           description: Success
@@ -223,16 +225,27 @@ paths:
           required: true
           schema:
             type: string
+          allowReserved: true
         - name: start
           in: query
           required: true
           schema:
             type: string
+          allowReserved: true
         - name: end
           in: query
           required: true
           schema:
             type: string
+          allowReserved: true
+        - name: interval
+          in: query
+          required: true
+          schema:
+            type: string
+          allowReserved: true 
+
+
       responses:
         200:
           description: Success

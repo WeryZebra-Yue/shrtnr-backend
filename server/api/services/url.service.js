@@ -46,7 +46,7 @@ class UrlService {
   }
   async updateUrl(user, url) {
     const updatedUrl = await UrlModel.updateOne(
-      { userId: user.id, _id: url._id },
+      { userId: user.id, _id: url.id },
       url
     );
     return updatedUrl;
@@ -60,7 +60,7 @@ class UrlService {
   }
   async redirectUrl(shortUrl) {
     const url = await UrlModel.findOne({ shorturl: shortUrl });
-    await this.logData(url._id);
+    await this.logData(url.id);
     return url.url;
   }
   async logData(urlId) {
@@ -68,7 +68,7 @@ class UrlService {
       urlId: urlId,
     });
   }
-  async getAnalytics(urlId, userId, window) {
+  async getAnalytics(urlId, userId, window, interval) {
     const url = await UrlModel.findOne({ userId: userId, _id: urlId });
     if (!url) {
       return { error: "No URL found" };
@@ -76,7 +76,7 @@ class UrlService {
     const response = await LogModel.aggregate([
       {
         $match: {
-          urlId: "647c39d87a0a86709f0c078e",
+          urlId: urlId,
         },
       },
       {
@@ -110,22 +110,68 @@ class UrlService {
       },
       {
         $group: {
-          _id: { date: "$date", time: "$time" },
+          _id: {
+            date: "$date",
+            time:
+              interval === "last24Hours" || interval === "allTime"
+                ? "$time"
+                : null,
+          },
           count: { $sum: 1 },
         },
       },
     ]);
-    const bins = {
-      time: [],
-      count: [],
-    };
-    response.forEach((element) => {
-      console.log(element._id.date + " " + element._id.time);
-      bins.time.push(
-        new Date(element._id.date + " " + element._id.time + ":00:00")
-      );
-      bins.count.push(element.count);
-    });
+    const bins = [];
+    if (interval === "last24Hours") {
+      for (let i = 0; i < 24; i++) {
+        bins.push({
+          time: new Date(new Date().setHours(i, 0, 0, 0)),
+          count: 0,
+        });
+      }
+      response.forEach((element) => {
+        bins[parseInt(element._id.time)].count = element.count;
+      });
+    } else if (interval === "last7Days") {
+      for (let i = 7; i >= 0; i--) {
+        bins.push({
+          time: new Date(
+            new Date().setDate(new Date().getDate() - i)
+          ).getDate(),
+          count: 0,
+        });
+      }
+      response.forEach((element) => {
+        bins.filter((bin) => {
+          return bin.time === parseInt(element._id.date.split("-")[0]);
+        })[0].count = element.count;
+      });
+    } else if (interval === "last30Days") {
+      for (let i = 30; i >= 0; i--) {
+        bins.push({
+          time: new Date(
+            new Date().setDate(new Date().getDate() - i)
+          ).getDate(),
+          count: 0,
+        });
+      }
+      response.forEach((element) => {
+        bins.filter((bin) => {
+          return bin.time === parseInt(element._id.date.split("-")[0]);
+        })[0].count = element.count;
+      });
+    } else {
+      response.forEach((element) => {
+        bins.push({
+          time: new Date(element._id.date + " " + element._id.time + ":00:00"),
+          count: element.count,
+        });
+      });
+      bins.sort((a, b) => {
+        return a.time - b.time;
+      });
+    }
+
     return bins;
   }
 

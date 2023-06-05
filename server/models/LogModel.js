@@ -7,7 +7,7 @@ const Log = new mongoose.Schema({
   },
   timestamp: {
     type: Date,
-    default: new Date().toISOString(),
+    default: new Date(),
   },
 });
 

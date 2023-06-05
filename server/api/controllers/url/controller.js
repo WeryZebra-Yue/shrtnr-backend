@@ -38,7 +38,7 @@ export class Controller {
   async deleteUrl(req, res) {
     try {
       const user = req.user;
-      const url = req.query.id;
+      const url = req.body.id;
       const deletedUrl = await urlService.deleteUrl(user, url);
       return res.status(200).json({ deletedUrl });
     } catch (err) {
@@ -73,11 +73,17 @@ export class Controller {
       const urlId = req.query.id;
       const start = req.query.start;
       const end = req.query.end;
+      const interval = req.query.interval;
       const user = req.user.id;
-      const analytics = await urlService.getAnalytics(urlId, user, {
-        start,
-        end,
-      });
+      const analytics = await urlService.getAnalytics(
+        urlId,
+        user,
+        {
+          start,
+          end,
+        },
+        interval
+      );
       return res.status(200).json(analytics);
     } catch (err) {
       l.error(err, "SHORT URL ERROR");
