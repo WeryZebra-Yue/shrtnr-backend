@@ -16,10 +16,6 @@ const User = new mongoose.Schema(
     lastName: {
       type: String,
     },
-    password: {
-      type: String,
-      required: [true, "Password missing!"],
-    },
     urls: {
       type: Array,
       default: [],

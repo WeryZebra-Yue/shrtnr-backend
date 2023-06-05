@@ -98,7 +98,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/GetUserResponse"
-  
+
   /url/add:
     post:
       tags:
@@ -118,7 +118,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AddUrlResponse"
- 
+
   # /url/get-all:
   #   get:
   #     tags:
@@ -152,7 +152,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AddUrlResponse"
-  
+
   /url/delete:
     post:
       tags:
@@ -174,7 +174,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AddUrlResponse"
-  
+
   /url/update:
     post:
       tags:
@@ -194,7 +194,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AddUrlResponse"
-  
+
   /url/redirect/{shorturl}:
     get:
       tags:
@@ -212,7 +212,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AddUrlResponse"
-  
+
   /url/get-analytics:
     get:
       tags:
@@ -243,8 +243,7 @@ paths:
           required: true
           schema:
             type: string
-          allowReserved: true 
-
+          allowReserved: true
 
       responses:
         200:
@@ -261,7 +260,6 @@ paths:
         200:
           description: Return the API specification
           content: {}
-          
 
 components:
   schemas:
@@ -354,7 +352,7 @@ components:
           type: string
           format: date-time
           example: "2020-01-01T00:00:00.000Z"
-  
+
     AddUrlBody:
       type: object
       required:
@@ -372,7 +370,7 @@ components:
         shorturl:
           type: string
           example: "https://copilot.com/abc123"
-        
+
     AddUrlResponse:
       type: object
       properties:
@@ -405,7 +403,7 @@ components:
       type: object
       items:
         type: array
-        items: 
+        items:
           type: string
           example: "2020-01-01T00:00:00.000Z"
 
