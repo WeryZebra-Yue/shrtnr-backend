@@ -1,120 +1,61 @@
-# copilot-backend
+<div align="center">
+  <h1>Shrtnr Backend</h1>
 
-My cool app
+</div>
 
-## Get Started
 
-Get started developing...
+ ![jXAvz9h-removebg](https://user-images.githubusercontent.com/75676675/149315884-dff616eb-fde5-48db-9000-de9988792ea0.png)
 
-```shell
-# install deps
-npm install
+ 
+<div align="center">
+ <h2>
+  <a href="https://api.shrtnr.tech/api-explorer/">Explore Backend 🔗 </a></h2>
 
-# run in development mode
-npm run dev
+</div>
+ 
 
-# run tests
-npm run test
+ 
+## Technologies
+
+Project is created with:
+* nodejs version: 16.13.0
+* express version: 4.17.1
+* mongoose version: 5.11.17
+* jsonwebtoken version: 8.5.1
+* Google Oauth
+* multer version: 1.4.4
+* bcrypt version: 5.0.1
+* deployment: Microsoft azure 
+* swagger
+
+## Getting Started
+
+1. Fork the repository
+2. Clone the repository
+
+```sh
+https://github.com/WeryZebra-Yue/shrtnr-backend.git
 ```
 
-## How do I modify the example API and make it my own?
+3. Open the folder containing the cloned repository
+4. Install the required packages, libraries and dependencies
 
-There are two key files that enable you to customize and describe your API:
-
-1. `server/routes.js` - This references the implementation of all of your routes. Add as many routes as you like and point each route your express handler functions.
-2. `server/common/api.yaml` - This file contains your [OpenAPI spec](https://swagger.io/specification/). Describe your API here. It's recommended that you to declare any and all validation logic in this YAML. `express-no-stress-typescript` uses [express-openapi-validator](https://github.com/cdimascio/express-openapi-validator) to automatically handle all API validation based on what you've defined in the spec.
-
-## Install Dependencies
-
-Install all package dependencies (one time operation)
-
-```shell
-npm install
+```sh
+yarn install
 ```
 
-## Run It
+5. Custom API keys can be set up in a `.env` file. The format for `.env` file can be found in `.env.example`.
+6. Start the project using:-
 
-#### Run in _development_ mode:
-
-Runs the application is development mode. Should not be used in production
-
-```shell
-npm run dev
+```sh
+yarn run dev
 ```
 
-or debug it
+7. Open http://localhost:8080/api-explorer/ to view the API documentation.
 
-```shell
-npm run dev:debug
-```
+<br/>
 
-#### Run in _production_ mode:
-
-Compiles the application and starts it in production production mode.
-
-```shell
-npm run compile
-npm start
-```
-
-## Test It
-
-Run the Mocha unit tests
-
-```shell
-npm test
-```
-
-or debug them
-
-```shell
-npm run test:debug
-```
-
-## Try It
-
-- Open your browser to [http://localhost:3000](http://localhost:3000)
-- Invoke the `/examples` endpoint
-  ```shell
-  curl http://localhost:3000/api/v1/examples
-  ```
-
-## Debug It
-
-#### Debug the server:
-
-```
-npm run dev:debug
-```
-
-#### Debug Tests
-
-```
-npm run test:debug
-```
-
-#### Debug with VSCode
-
-Add these [contents](https://github.com/cdimascio/generator-express-no-stress/blob/next/assets/.vscode/launch.json) to your `.vscode/launch.json` file
-
-## Lint It
-
-View prettier linter output
-
-```
-npm run lint
-```
-
-Fix all prettier linter errors
-
-```
-npm run lint
-```
-
-## Deploy It
-
-Deploy to CloudFoundry
-
-```shell
-cf push copilot-backend
-```
+## PHI (Φ)
+### Team members: 
+ * [Master Ayush](https://github.com/WeryZebra-Yue)  
+ * [Raj Varsani](https://github.com/RajVarsani)
