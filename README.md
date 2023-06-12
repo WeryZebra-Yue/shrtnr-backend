@@ -34,7 +34,7 @@ Project is created with:
 2. Clone the repository
 
 ```sh
-https://github.com/WeryZebra-Yue/shrtnr-backend.git
+https://github.com/shrtnr-tech/backend.git
 ```
 
 3. Open the folder containing the cloned repository
